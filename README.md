@@ -233,6 +233,8 @@ try {
 }
 ```
 
+![](doc-images/mock-db-image1.png)
+
 批量提交随机数据：
 
 ```java
