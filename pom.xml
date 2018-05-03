@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.github.developframework</groupId>
+    <artifactId>mock</artifactId>
+    <packaging>pom</packaging>
+    <version>0.1</version>
+    <modules>
+        <module>mock-text</module>
+        <module>mock-db</module>
+    </modules>
+
+    <properties>
+        <version.toolkit>0.1</version.toolkit>
+        <version.commons-io>2.5</version.commons-io>
+        <version.commons-lang3>3.7</version.commons-lang3>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.developframework</groupId>
+                <artifactId>mock-text</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.developframework</groupId>
+                <artifactId>toolkit-base</artifactId>
+                <version>${version.toolkit}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${version.commons-io}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${version.commons-lang3}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
