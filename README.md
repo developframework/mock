@@ -161,6 +161,30 @@ ${ personName | length=3 }
 | -------- | -------- | ------ | --------------------------- | -------- |
 | length   | 名字字数 | 3      | ${ personName \| length=3 } | 王悦议   |
 
+#### identityCard
+
+随机身份证号
+
+```
+${ identityCard | birthday-ref=random, range=30y }
+```
+
+| 可用参数     | 说明     | 默认值 | 随机示例                               | 示例结果           |
+| ------------ | -------- | ------ | -------------------------------------- | ------------------ |
+| birthday-ref | 生日依赖 | random | ${ personName \| birthday-ref=random } | 152028201408159388 |
+| range        | 生日范围 | 30y    | ${ identityCard \| range=30y }         | 914951199607233405 |
+
+```java
+String result = mockClient.mock("birthday: ${ date | id=aaa, range=30y }\nidentityCard: ${ identityCard | birthday-ref=aaa}");
+```
+
+```
+birthday: 2014-08-15
+identityCard: 152028201408159388
+```
+
++ `birthday-ref`可以引用之前出现过的生日日期，生成更加严谨的身份证号
+
 #### quote
 
 这个类型本身不生成随机值，引用之前已生成的随机值
