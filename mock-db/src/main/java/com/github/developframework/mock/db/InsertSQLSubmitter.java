@@ -2,7 +2,7 @@ package com.github.developframework.mock.db;
 
 import com.github.developframework.mock.MockPlaceholder;
 import com.github.developframework.mock.random.RandomFactory;
-import com.github.developframework.toolkit.base.NameValuePair;
+import com.github.developframework.toolkit.base.components.KeyValuePair;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -19,7 +19,7 @@ public abstract class InsertSQLSubmitter {
 
     protected String table;
 
-    protected List<NameValuePair<String, MockPlaceholder>> fields = new LinkedList<>();
+    protected List<KeyValuePair<String, MockPlaceholder>> fields = new LinkedList<>();
 
     public InsertSQLSubmitter(RandomFactory randomFactory) {
         this.randomFactory = randomFactory;
@@ -36,7 +36,7 @@ public abstract class InsertSQLSubmitter {
     }
 
     public InsertSQLSubmitter field(String field, String placeholder) {
-        this.fields.add(new NameValuePair<>(field, new MockPlaceholder(placeholder)));
+        this.fields.add(new KeyValuePair<>(field, new MockPlaceholder(placeholder)));
         return this;
     }
 

@@ -33,7 +33,7 @@ public class MysqlInsertSQLSubmitter extends InsertSQLSubmitter {
         if (fields.isEmpty()) {
             throw new DBMockException("fields is empty.");
         }
-        sb.append(StringUtils.join(fields.stream().map(pair -> "`" + pair.getName() + "`").collect(Collectors.toList()), ", "));
+        sb.append(StringUtils.join(fields.stream().map(pair -> "`" + pair.getKey() + "`").collect(Collectors.toList()), ", "));
         sb.append(") VALUES(");
         sb.append(StringUtils.join(fields.stream().map(pair -> "?").collect(Collectors.toList()), ", "));
         sb.append(')');
