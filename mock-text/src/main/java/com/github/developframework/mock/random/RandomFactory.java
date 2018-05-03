@@ -19,7 +19,8 @@ public class RandomFactory {
             new DateRandomGenerator(),
             new DateTimeRandomGenerator(),
             new BooleanRandomGenerator(),
-            new QuoteRandomGenerator()
+            new QuoteRandomGenerator(),
+            new IdentityCardRandomGenerator()
     };
 
     private Map<String, RandomGenerator> randomGeneratorMap = new HashMap<>();

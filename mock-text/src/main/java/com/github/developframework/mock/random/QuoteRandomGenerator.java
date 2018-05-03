@@ -13,13 +13,13 @@ import java.util.Optional;
 public class QuoteRandomGenerator implements RandomGenerator<Object>{
     @Override
     public Object randomValue(MockPlaceholder mockPlaceholder, MockCache mockCache) {
-        Optional<String> idOptional = mockPlaceholder.getParameter("id", String.class);
+        Optional<String> idOptional = mockPlaceholder.getParameter("ref", String.class);
         if (idOptional.isPresent()) {
-            Object value = mockCache.get(idOptional.get());
-            if(value == null) {
+            MockCache.Cache cache = mockCache.get(idOptional.get());
+            if(cache == null) {
                 throw new MockException("quote \"%s\" value is undefined.", idOptional.get());
             }
-            return value;
+            return cache.getValue();
         }
         throw new MockException("\"id\" is not exist.");
     }

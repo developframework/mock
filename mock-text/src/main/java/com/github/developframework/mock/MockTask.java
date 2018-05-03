@@ -37,7 +37,7 @@ class MockTask {
             Object value = randomGenerator.randomValue(mockPlaceholder, cache);
             // 加入缓存
             if (idOptional.isPresent()) {
-                cache.put(idOptional.get(), value);
+                cache.put(idOptional.get(), new MockCache.Cache(value, mockPlaceholder));
             }
             result = result.replace(mockPlaceholder.getPlaceholder(), value.toString());
         }
