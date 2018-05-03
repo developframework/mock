@@ -88,9 +88,9 @@ ${ string | length=10, letters, numbers, uppercase, lowercase }
 | --------- | ---------- | ------ | ------------------------ | ---------- |
 | length    | 字符串长度 | 6      | ${ string \| length=10 } | UvmNUqOACS |
 | letters   | 使用字母   | true   | ${ string \| letters }   | EETnby     |
-| numbers   | 使用数字   | false  | ${ string \| numbers}    | 236914     |
-| uppercase | 使用大写   | false  | ${ string \| uppercase}  | LHKRDU     |
-| lowercase | 使用小写   | false  | ${ string \| lowercase}  | mgpval     |
+| numbers   | 使用数字   | false  | ${ string \| numbers }   | 236914     |
+| uppercase | 使用大写   | false  | ${ string \| uppercase } | LHKRDU     |
+| lowercase | 使用小写   | false  | ${ string \| lowercase } | mgpval     |
 
 + `uppercase`和`lowercase`都写和都不写时，大小写混合。
 
@@ -188,6 +188,24 @@ public interface RandomGenerator<T> {
 
     // 占位符类型的名称
     String name();
+}
+```
+
+```java
+public class MyRandomGenerator implements RandomGenerator<String>{
+    @Override
+    public String randomValue(MockPlaceholder mockPlaceholder, MockCache mockCache) {
+        // 获得参数
+        String param = mockPlaceholder.getParameterOrDefault("param", String.class, "default value");
+        
+        // 返回随机值
+        return null;
+    }
+
+    @Override
+    public String name() {
+        return "myPlaceholder";
+    }
 }
 ```
 
