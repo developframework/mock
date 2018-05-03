@@ -84,13 +84,13 @@ ${ string | length=10, uppercase }
 ${ string | length=10, letters, numbers, uppercase, lowercase }
 ```
 
-| 可用参数  | 说明       | 默认值 | 随机示例                                               | 示例结果   |
-| --------- | ---------- | ------ | ------------------------------------------------------ | ---------- |
-| length    | 字符串长度 | 6      | ${ string \| length=10 }                               | UvmNUqOACS |
-| letters   | 使用字母   | true   | ${ string | letters } 或 \${string \| letters=true}    | EETnby     |
-| numbers   | 使用数字   | false  | ${ string | numbers} 或 \${string \| numbers=true}     | 236914     |
-| uppercase | 使用大写   | false  | ${ string | uppercase} 或 \${string \| uppercase=true} | LHKRDU     |
-| lowercase | 使用小写   | false  | ${ string | lowercase} 或 \${string \| lowercase=true} | mgpval     |
+| 可用参数  | 说明       | 默认值 | 随机示例                 | 示例结果   |
+| --------- | ---------- | ------ | ------------------------ | ---------- |
+| length    | 字符串长度 | 6      | ${ string \| length=10 } | UvmNUqOACS |
+| letters   | 使用字母   | true   | ${ string \| letters }   | EETnby     |
+| numbers   | 使用数字   | false  | ${ string \| numbers}    | 236914     |
+| uppercase | 使用大写   | false  | ${ string \| uppercase}  | LHKRDU     |
+| lowercase | 使用小写   | false  | ${ string \| lowercase}  | mgpval     |
 
 + `uppercase`和`lowercase`都写和都不写时，大小写混合。
 
