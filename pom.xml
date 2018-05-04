@@ -14,7 +14,7 @@
     </modules>
 
     <properties>
-        <version.toolkit>0.1</version.toolkit>
+        <version.toolkit>0.2</version.toolkit>
         <version.commons-io>2.5</version.commons-io>
         <version.commons-lang3>3.7</version.commons-lang3>
     </properties>

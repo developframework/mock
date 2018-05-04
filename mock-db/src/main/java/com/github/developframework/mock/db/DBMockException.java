@@ -1,6 +1,6 @@
 package com.github.developframework.mock.db;
 
-import com.github.developframework.toolkit.base.FormatRuntimeException;
+import com.github.developframework.toolkit.base.exception.FormatRuntimeException;
 
 /**
  * @author qiuzhenhao

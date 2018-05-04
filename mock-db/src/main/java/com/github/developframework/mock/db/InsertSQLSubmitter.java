@@ -1,7 +1,7 @@
 package com.github.developframework.mock.db;
 
 import com.github.developframework.mock.MockPlaceholder;
-import com.github.developframework.mock.random.RandomFactory;
+import com.github.developframework.mock.random.RandomGeneratorFactory;
 import com.github.developframework.toolkit.base.components.KeyValuePair;
 
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public abstract class InsertSQLSubmitter {
 
-    protected RandomFactory randomFactory;
+    protected RandomGeneratorFactory randomGeneratorFactory;
 
     protected String database;
 
@@ -21,8 +21,8 @@ public abstract class InsertSQLSubmitter {
 
     protected List<KeyValuePair<String, MockPlaceholder>> fields = new LinkedList<>();
 
-    public InsertSQLSubmitter(RandomFactory randomFactory) {
-        this.randomFactory = randomFactory;
+    public InsertSQLSubmitter(RandomGeneratorFactory randomGeneratorFactory) {
+        this.randomGeneratorFactory = randomGeneratorFactory;
     }
 
     public InsertSQLSubmitter database(String database) {

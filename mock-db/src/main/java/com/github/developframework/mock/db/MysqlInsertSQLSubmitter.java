@@ -1,7 +1,7 @@
 package com.github.developframework.mock.db;
 
 import com.github.developframework.mock.MockPlaceholder;
-import com.github.developframework.mock.random.RandomFactory;
+import com.github.developframework.mock.random.RandomGeneratorFactory;
 import com.github.developframework.mock.random.RandomGenerator;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
  */
 public class MysqlInsertSQLSubmitter extends InsertSQLSubmitter {
 
-    public MysqlInsertSQLSubmitter(RandomFactory randomFactory) {
-        super(randomFactory);
+    public MysqlInsertSQLSubmitter(RandomGeneratorFactory randomGeneratorFactory) {
+        super(randomGeneratorFactory);
     }
 
     private String build() {
@@ -51,7 +51,7 @@ public class MysqlInsertSQLSubmitter extends InsertSQLSubmitter {
         PreparedStatement preparedStatement = connection.prepareStatement(build());
         for (int i = 0; i < fields.size(); i++) {
             MockPlaceholder mockPlaceholder = fields.get(i).getValue();
-            RandomGenerator randomGenerator = randomFactory.getRandomGenerator(mockPlaceholder.getName());
+            RandomGenerator randomGenerator = randomGeneratorFactory.getRandomGenerator(mockPlaceholder.getName());
             Object value = randomGenerator.randomValue(mockPlaceholder, null);
             preparedStatement.setString(i + 1, value.toString());
         }
@@ -76,7 +76,7 @@ public class MysqlInsertSQLSubmitter extends InsertSQLSubmitter {
             for (int i = 0; i < quantity; i++) {
                 for (int j = 0; j < fields.size(); j++) {
                     MockPlaceholder mockPlaceholder = fields.get(j).getValue();
-                    RandomGenerator randomGenerator = randomFactory.getRandomGenerator(mockPlaceholder.getName());
+                    RandomGenerator randomGenerator = randomGeneratorFactory.getRandomGenerator(mockPlaceholder.getName());
                     Object value = randomGenerator.randomValue(mockPlaceholder, null);
                     preparedStatement.setString(j + 1, value.toString());
                 }

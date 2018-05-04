@@ -1,6 +1,6 @@
 package com.github.developframework.mock;
 
-import com.github.developframework.mock.random.RandomFactory;
+import com.github.developframework.mock.random.RandomGeneratorFactory;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 
@@ -16,10 +16,10 @@ import java.util.List;
 public class MockClient {
 
     @Getter
-    private RandomFactory randomFactory = new RandomFactory();
+    private RandomGeneratorFactory randomGeneratorFactory = new RandomGeneratorFactory();
 
     public String mock(String template) {
-        MockTask mockTask = new MockTask(randomFactory, template);
+        MockTask mockTask = new MockTask(randomGeneratorFactory, template);
         return mockTask.run();
     }
 

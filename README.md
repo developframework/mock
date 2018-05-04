@@ -76,7 +76,7 @@ ${ string | length=10, uppercase }
 
 目前所有内置的占位符
 
-#### string
+#### **string**
 
 随机字符串
 
@@ -94,7 +94,7 @@ ${ string | length=10, letters, numbers, uppercase, lowercase }
 
 + `uppercase`和`lowercase`都写和都不写时，大小写混合。
 
-#### number
+#### **number**
 
 随机数值
 
@@ -109,7 +109,7 @@ ${ number | min=0, max=100, decimals}
 | decimals | 采用小数 | false            | ${ number \| decimals }            | 82.30656374435402 |
 | digit    | 有效位数 | null             | ${ number \| decimals, digit = 2 } | 91.02             |
 
-#### boolean
+#### **boolean**
 
 随机布尔值
 
@@ -117,7 +117,7 @@ ${ number | min=0, max=100, decimals}
 ${ boolean }
 ```
 
-#### date
+#### **date**
 
 随机日期
 
@@ -131,7 +131,7 @@ ${ date | range=1y, pattern=yyyy-MM-dd, future }
 | pattern  | 日期格式化                                       | yyyy-MM-dd | ${ date \| pattern=yyyy/MM/dd } | 2018/03/20 |
 | future   | 随机一个未来的日期，默认是已过的日期             | false      | ${ date \| future }             | 2018-05-16 |
 
-#### datetime
+#### **datetime**
 
 随机时间
 
@@ -141,7 +141,7 @@ ${ datetime | range=1y, pattern=yyyy-MM-dd, future }
 
 可用参数和**date**类型一致，区别是`pattern`参数默认值是yyyy-MM-dd HH:mm:ss
 
-#### mobile
+#### **mobile**
 
 随机手机号码
 
@@ -149,7 +149,7 @@ ${ datetime | range=1y, pattern=yyyy-MM-dd, future }
 ${ mobile }
 ```
 
-#### personName
+#### **personName**
 
 随机人名
 
@@ -161,7 +161,7 @@ ${ personName | length=3 }
 | -------- | -------- | ------ | --------------------------- | -------- |
 | length   | 名字字数 | 3      | ${ personName \| length=3 } | 王悦议   |
 
-#### identityCard
+#### **identityCard**
 
 随机身份证号
 
@@ -185,7 +185,19 @@ identityCard: 152028201408159388
 
 + `birthday-ref`可以引用之前出现过的生日日期，生成更加严谨的身份证号
 
-#### quote
+#### **address**
+
+随机地址
+
+```
+${ address | level=3 }
+```
+
+| 可用参数 | 说明     | 默认值 | 随机示例                | 示例结果           |
+| -------- | -------- | ------ | ----------------------- | ------------------ |
+| level    | 地址层数 | 3      | ${ address \| level=3 } | 浙江省杭州市富阳区 |
+
+#### **quote**
 
 这个类型本身不生成随机值，引用之前已生成的随机值
 
