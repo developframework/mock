@@ -279,6 +279,7 @@ try {
             .field("name", "${ personName }")
             .field("birthday", "${ date | range=20y }")
             .field("mobile", "${ mobile }")
+            .field("address", "${ address }")
             .submit(driver, url, user, password);
 
     System.out.println(count);
@@ -286,8 +287,6 @@ try {
     e.printStackTrace();
 }
 ```
-
-![](doc-images/mock-db-image1.png)
 
 批量提交随机数据：
 
@@ -297,4 +296,6 @@ int count = client.byMysql()
     // 忽略表配置
     .submitBatch(driver, url, user, password, quantity);
 ```
+
+![](doc-images/mock-db-image1.png)
 
