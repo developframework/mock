@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * 生成器注册器
  * @author qiuzhenhao
  */
-public class RandomGeneratorFactory {
+public class RandomGeneratorRegistry {
 
     private RandomGenerator[] defaultRandomGenerators = {
             new StringRandomGenerator(),
@@ -26,7 +26,7 @@ public class RandomGeneratorFactory {
 
     private Map<String, RandomGenerator> randomGeneratorMap = new HashMap<>();
 
-    public RandomGeneratorFactory() {
+    public RandomGeneratorRegistry() {
         for (RandomGenerator randomGenerator : defaultRandomGenerators) {
             randomGeneratorMap.put(randomGenerator.name(), randomGenerator);
         }

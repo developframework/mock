@@ -1,7 +1,8 @@
 package com.github.developframework.mock.db;
 
 import com.github.developframework.mock.MockPlaceholder;
-import com.github.developframework.mock.random.RandomGeneratorFactory;
+import com.github.developframework.mock.MockTask;
+import com.github.developframework.mock.random.RandomGeneratorRegistry;
 import com.github.developframework.toolkit.base.components.KeyValuePair;
 
 import java.sql.SQLException;
@@ -13,16 +14,19 @@ import java.util.List;
  */
 public abstract class InsertSQLSubmitter {
 
-    protected RandomGeneratorFactory randomGeneratorFactory;
+    protected RandomGeneratorRegistry randomGeneratorRegistry;
 
     protected String database;
 
     protected String table;
 
-    protected List<KeyValuePair<String, MockPlaceholder>> fields = new LinkedList<>();
+    protected List<KeyValuePair<String, MockTask>> fields = new LinkedList<>();
 
-    public InsertSQLSubmitter(RandomGeneratorFactory randomGeneratorFactory) {
-        this.randomGeneratorFactory = randomGeneratorFactory;
+    protected DBInfo dbInfo;
+
+    public InsertSQLSubmitter(RandomGeneratorRegistry randomGeneratorRegistry, DBInfo dbInfo) {
+        this.randomGeneratorRegistry = randomGeneratorRegistry;
+        this.dbInfo = dbInfo;
     }
 
     public InsertSQLSubmitter database(String database) {
@@ -35,13 +39,15 @@ public abstract class InsertSQLSubmitter {
         return this;
     }
 
-    public InsertSQLSubmitter field(String field, String placeholder) {
-        this.fields.add(new KeyValuePair<>(field, new MockPlaceholder(placeholder)));
+    public InsertSQLSubmitter field(String field, String template) {
+        this.fields.add(new KeyValuePair<>(field, new MockTask(randomGeneratorRegistry, template)));
         return this;
     }
 
-    public abstract int submit(String driver, String url, String user, String password) throws SQLException;
+    public int submit() throws SQLException {
+        return submit(1);
+    }
 
-    public abstract int submitBatch(String driver, String url, String user, String password, int quantity) throws SQLException;
+    public abstract int submit(int quantity) throws SQLException;
 
 }

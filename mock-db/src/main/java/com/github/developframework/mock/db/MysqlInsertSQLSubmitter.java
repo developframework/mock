@@ -1,7 +1,8 @@
 package com.github.developframework.mock.db;
 
 import com.github.developframework.mock.MockPlaceholder;
-import com.github.developframework.mock.random.RandomGeneratorFactory;
+import com.github.developframework.mock.MockTask;
+import com.github.developframework.mock.random.RandomGeneratorRegistry;
 import com.github.developframework.mock.random.RandomGenerator;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,8 +17,8 @@ import java.util.stream.Collectors;
  */
 public class MysqlInsertSQLSubmitter extends InsertSQLSubmitter {
 
-    public MysqlInsertSQLSubmitter(RandomGeneratorFactory randomGeneratorFactory) {
-        super(randomGeneratorFactory);
+    public MysqlInsertSQLSubmitter(RandomGeneratorRegistry randomGeneratorRegistry, DBInfo dbInfo) {
+        super(randomGeneratorRegistry, dbInfo);
     }
 
     private String build() {
@@ -41,44 +42,22 @@ public class MysqlInsertSQLSubmitter extends InsertSQLSubmitter {
     }
 
     @Override
-    public int submit(String driver, String url, String user, String password) throws SQLException {
+    public int submit(int quantity) throws SQLException {
         try {
-            Class.forName(driver);
+            Class.forName(dbInfo.getDriver());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        Connection connection = DriverManager.getConnection(url, user, password);
-        PreparedStatement preparedStatement = connection.prepareStatement(build());
-        for (int i = 0; i < fields.size(); i++) {
-            MockPlaceholder mockPlaceholder = fields.get(i).getValue();
-            RandomGenerator randomGenerator = randomGeneratorFactory.getRandomGenerator(mockPlaceholder.getName());
-            Object value = randomGenerator.randomValue(mockPlaceholder, null);
-            preparedStatement.setString(i + 1, value.toString());
-        }
-        int r = preparedStatement.executeUpdate();
-        preparedStatement.close();
-        connection.close();
-        return r;
-    }
-
-    @Override
-    public int submitBatch(String driver, String url, String user, String password, int quantity) throws SQLException {
-        try {
-            Class.forName(driver);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        Connection connection = DriverManager.getConnection(url, user, password);
+        Connection connection = DriverManager.getConnection(dbInfo.getUrl(), dbInfo.getUser(), dbInfo.getPassword());
         connection.setAutoCommit(false);
         PreparedStatement preparedStatement = connection.prepareStatement(build());
         int r = 0;
         try {
             for (int i = 0; i < quantity; i++) {
                 for (int j = 0; j < fields.size(); j++) {
-                    MockPlaceholder mockPlaceholder = fields.get(j).getValue();
-                    RandomGenerator randomGenerator = randomGeneratorFactory.getRandomGenerator(mockPlaceholder.getName());
-                    Object value = randomGenerator.randomValue(mockPlaceholder, null);
-                    preparedStatement.setString(j + 1, value.toString());
+                    MockTask mockTask = fields.get(j).getValue();
+                    String value = mockTask.run();
+                    preparedStatement.setString(j + 1, value);
                 }
                 r += preparedStatement.executeUpdate();
             }

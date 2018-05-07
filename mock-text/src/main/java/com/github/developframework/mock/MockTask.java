@@ -1,6 +1,6 @@
 package com.github.developframework.mock;
 
-import com.github.developframework.mock.random.RandomGeneratorFactory;
+import com.github.developframework.mock.random.RandomGeneratorRegistry;
 import com.github.developframework.mock.random.RandomGenerator;
 
 import java.util.LinkedList;
@@ -13,19 +13,19 @@ import java.util.regex.Pattern;
  * 一个任务
  * @author qiuzhenhao
  */
-class MockTask {
+public class MockTask {
 
     private static final String REGEX = "(?=\\$\\{)(.*?)(?<=\\})";
 
-    private RandomGeneratorFactory randomGeneratorFactory;
+    private RandomGeneratorRegistry randomGeneratorRegistry;
 
     private String template;
 
     private MockCache cache = new MockCache();
 
 
-    public MockTask(RandomGeneratorFactory randomGeneratorFactory, String template) {
-        this.randomGeneratorFactory = randomGeneratorFactory;
+    public MockTask(RandomGeneratorRegistry randomGeneratorRegistry, String template) {
+        this.randomGeneratorRegistry = randomGeneratorRegistry;
         this.template = template;
     }
 
@@ -33,7 +33,7 @@ class MockTask {
         List<MockPlaceholder> mockPlaceholders = extractPlaceholder(template);
         String result = template;
         for (MockPlaceholder mockPlaceholder : mockPlaceholders) {
-            RandomGenerator randomGenerator = randomGeneratorFactory.getRandomGenerator(mockPlaceholder.getName());
+            RandomGenerator randomGenerator = randomGeneratorRegistry.getRandomGenerator(mockPlaceholder.getName());
             Optional<String> idOptional = mockPlaceholder.getId();
             Object value = randomGenerator.randomValue(mockPlaceholder, cache);
             // 加入缓存

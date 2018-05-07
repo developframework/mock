@@ -31,7 +31,7 @@ random text: pXFMyu
 批量生成：
 
 ```java
-List<String> list = mockClient.mockBatch("random text: ${ string }", 5);
+List<String> list = mockClient.mock("random text: ${ string }", 5);
 list.forEach(System.out::println);
 ```
 
@@ -52,7 +52,7 @@ String result = mockClient.mock(inputStream, charset);
 从输入流引入模板批量生成
 
 ```java
-List<String> list = mockClient.mockBatch(inputStream, charset, quantity);
+List<String> list = mockClient.mock(inputStream, charset, quantity);
 ```
 
 ### 占位符
@@ -251,7 +251,7 @@ public class MyRandomGenerator implements RandomGenerator<String>{
 RandomGenerator[] customRandomGenerators = new RandomGenerator[] {
     new MyRandomGenerator()
 };
-mockClient.getRandomFactory().customRandomGenerators(customRandomGenerators);
+mockClient.getRandomGeneratorRegistry().customRandomGenerators(customRandomGenerators);
 ```
 
 ## Mock-db
@@ -271,7 +271,7 @@ mockClient.getRandomFactory().customRandomGenerators(customRandomGenerators);
 提交一条随机数据
 
 ```java
-DBMockClient client = new DBMockClient();
+DBMockClient client = new DBMockClient(driver, url, user, password);
 try {
     int count = client.byMysql()
             .database("test")
@@ -280,8 +280,7 @@ try {
             .field("birthday", "${ date | range=20y }")
             .field("mobile", "${ mobile }")
             .field("address", "${ address }")
-            .submit(driver, url, user, password);
-
+            .submit();
     System.out.println(count);
 } catch (SQLException e) {
     e.printStackTrace();
@@ -291,10 +290,9 @@ try {
 批量提交随机数据：
 
 ```java
-int quantity = 100;
 int count = client.byMysql()
     // 忽略表配置
-    .submitBatch(driver, url, user, password, quantity);
+    .submit(100);
 ```
 
 ![](doc-images/mock-db-image1.png)

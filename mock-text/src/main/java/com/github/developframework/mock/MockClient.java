@@ -1,6 +1,6 @@
 package com.github.developframework.mock;
 
-import com.github.developframework.mock.random.RandomGeneratorFactory;
+import com.github.developframework.mock.random.RandomGeneratorRegistry;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 
@@ -16,14 +16,14 @@ import java.util.List;
 public class MockClient {
 
     @Getter
-    private RandomGeneratorFactory randomGeneratorFactory = new RandomGeneratorFactory();
+    private RandomGeneratorRegistry randomGeneratorRegistry = new RandomGeneratorRegistry();
 
     public String mock(String template) {
-        MockTask mockTask = new MockTask(randomGeneratorFactory, template);
+        MockTask mockTask = new MockTask(randomGeneratorRegistry, template);
         return mockTask.run();
     }
 
-    public List<String> mockBatch(String template, int size) {
+    public List<String> mock(String template, int size) {
         List<String> list = new LinkedList<>();
         for (int i = 0; i < size; i++) {
             list.add(mock(template));
@@ -51,7 +51,7 @@ public class MockClient {
      * @return
      * @throws IOException
      */
-    public List<String> mockBatch(InputStream inputStream, Charset charset, int quantity) throws IOException {
+    public List<String> mock(InputStream inputStream, Charset charset, int quantity) throws IOException {
         StringBuffer templateBuffer = new StringBuffer();
         IOUtils.readLines(inputStream, charset).forEach(line -> templateBuffer.append(line).append('\n'));
         List<String> list = new LinkedList<>();

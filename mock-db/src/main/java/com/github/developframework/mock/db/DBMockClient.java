@@ -1,7 +1,7 @@
 package com.github.developframework.mock.db;
 
 import com.github.developframework.mock.MockClient;
-import com.github.developframework.mock.random.RandomGeneratorFactory;
+import com.github.developframework.mock.random.RandomGeneratorRegistry;
 import lombok.Getter;
 
 /**
@@ -10,9 +10,16 @@ import lombok.Getter;
 public class DBMockClient extends MockClient{
 
     @Getter
-    private RandomGeneratorFactory randomGeneratorFactory = new RandomGeneratorFactory();
+    private DBInfo dbInfo;
+
+    public DBMockClient(String driver, String url, String user, String password) {
+        this.dbInfo = new DBInfo(driver, url, user, password);
+    }
+
+    @Getter
+    private RandomGeneratorRegistry randomGeneratorRegistry = new RandomGeneratorRegistry();
 
     public MysqlInsertSQLSubmitter byMysql() {
-        return new MysqlInsertSQLSubmitter(randomGeneratorFactory);
+        return new MysqlInsertSQLSubmitter(randomGeneratorRegistry, dbInfo);
     }
 }
