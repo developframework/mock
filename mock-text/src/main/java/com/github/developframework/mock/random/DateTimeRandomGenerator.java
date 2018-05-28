@@ -9,7 +9,10 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import java.util.Date;
 
 /**
+ * 随机日期时间生成器
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class DateTimeRandomGenerator implements RandomGenerator<String> {
 

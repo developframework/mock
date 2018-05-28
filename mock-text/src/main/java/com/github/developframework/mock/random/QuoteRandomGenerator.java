@@ -8,7 +8,9 @@ import java.util.Optional;
 
 /**
  * 引用生成器
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class QuoteRandomGenerator implements RandomGenerator<Object>{
     @Override

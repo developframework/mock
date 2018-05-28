@@ -54,15 +54,26 @@ public class PersonNameRandomGenerator implements RandomGenerator<String> {
     @Override
     public String randomValue(MockPlaceholder mockPlaceholder, MockCache cache) {
         Optional<Integer> lengthOptional = mockPlaceholder.getParameter("length", Integer.class);
-        int length = RandomUtils.nextBoolean() ? 3 : 2;
-        if (lengthOptional.isPresent()) {
-            length = lengthOptional.get();
+        boolean isOnlyName = mockPlaceholder.getParameterOrDefault("onlyName", boolean.class, false);
+        int length;
+        if(isOnlyName) {
+            length = 3;
+        } else {
+            length = RandomUtils.nextBoolean() ? 3 : 2;
+            if (lengthOptional.isPresent()) {
+                length = lengthOptional.get();
+            }
+            if(length < 2) {
+                throw new MockException("person name least 2 words.");
+            }
         }
-        if(length < 2) {
-            throw new MockException("person name least 2 words.");
+        String r;
+        if(isOnlyName) {
+            r = "";
+        } else {
+            String familyName = familyNameLib[RandomUtils.nextInt(0, familyNameLib.length)];
+            r = familyName;
         }
-        String familyName = familyNameLib[RandomUtils.nextInt(0, familyNameLib.length)];
-        String r = familyName;
         for (int i = 0; i < length - 1; i++) {
             r += nameLib[RandomUtils.nextInt(0, nameLib.length)];
         }

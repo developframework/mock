@@ -7,29 +7,36 @@
     <groupId>com.github.developframework</groupId>
     <artifactId>mock</artifactId>
     <packaging>pom</packaging>
-    <version>0.2</version>
+    <version>0.2-SNAPSHOT</version>
     <modules>
         <module>mock-text</module>
         <module>mock-db</module>
     </modules>
 
     <properties>
-        <version.toolkit>0.2</version.toolkit>
+        <version.toolkit>0.3</version.toolkit>
         <version.commons-io>2.5</version.commons-io>
         <version.commons-lang3>3.7</version.commons-lang3>
+        <version.slf4j-api>1.7.25</version.slf4j-api>
+        <version.chinese-administrative-region-data>1.0.0</version.chinese-administrative-region-data>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>com.github.developframework</groupId>
-                <artifactId>mock-text</artifactId>
-                <version>${project.version}</version>
+                <artifactId>toolkit-base</artifactId>
+                <version>${version.toolkit}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.developframework</groupId>
-                <artifactId>toolkit-base</artifactId>
-                <version>${version.toolkit}</version>
+                <artifactId>chinese-administrative-region-data</artifactId>
+                <version>${version.chinese-administrative-region-data}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>mock-text</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
@@ -40,6 +47,11 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${version.commons-lang3}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${version.slf4j-api}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

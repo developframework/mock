@@ -8,6 +8,7 @@ import java.util.Map;
 /**
  * 生成器注册器
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class RandomGeneratorRegistry {
 
@@ -16,8 +17,10 @@ public class RandomGeneratorRegistry {
             new NumberRandomGenerator(),
             new PersonNameRandomGenerator(),
             new MobileRandomGenerator(),
-            new DateRandomGenerator(),
             new DateTimeRandomGenerator(),
+            new DateRandomGenerator(),
+            new TimeRandomGenerator(),
+            new EnumRandomGenerator(),
             new BooleanRandomGenerator(),
             new QuoteRandomGenerator(),
             new IdentityCardRandomGenerator(),

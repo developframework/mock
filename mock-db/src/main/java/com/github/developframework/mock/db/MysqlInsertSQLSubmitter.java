@@ -1,20 +1,22 @@
 package com.github.developframework.mock.db;
 
-import com.github.developframework.mock.MockPlaceholder;
 import com.github.developframework.mock.MockTask;
 import com.github.developframework.mock.random.RandomGeneratorRegistry;
-import com.github.developframework.mock.random.RandomGenerator;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * @author qiuzhenhao
  */
+@Slf4j
 public class MysqlInsertSQLSubmitter extends InsertSQLSubmitter {
 
     public MysqlInsertSQLSubmitter(RandomGeneratorRegistry randomGeneratorRegistry, DBInfo dbInfo) {
@@ -50,19 +52,24 @@ public class MysqlInsertSQLSubmitter extends InsertSQLSubmitter {
         }
         Connection connection = DriverManager.getConnection(dbInfo.getUrl(), dbInfo.getUser(), dbInfo.getPassword());
         connection.setAutoCommit(false);
-        PreparedStatement preparedStatement = connection.prepareStatement(build());
+        String sql = build();
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
         int r = 0;
         try {
             for (int i = 0; i < quantity; i++) {
+                List<String> values = new LinkedList<>();
                 for (int j = 0; j < fields.size(); j++) {
                     MockTask mockTask = fields.get(j).getValue();
                     String value = mockTask.run();
+                    values.add(value);
                     preparedStatement.setString(j + 1, value);
                 }
                 r += preparedStatement.executeUpdate();
+                log.debug(sql + "\n=> Values： " + String.join(", ", values));
             }
         } catch(Exception e) {
             connection.rollback();
+            throw new DBMockException(e.getMessage());
         }
         connection.commit();
         preparedStatement.close();

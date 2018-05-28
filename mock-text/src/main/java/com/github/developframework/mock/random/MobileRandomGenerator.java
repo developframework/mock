@@ -6,7 +6,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 
 /**
+ * 随机手机号生成器
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class MobileRandomGenerator implements RandomGenerator<String> {
 

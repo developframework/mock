@@ -6,7 +6,9 @@ import com.github.developframework.mock.MockPlaceholder;
 
 /**
  * 随机生成器
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public interface RandomGenerator<T> {
 

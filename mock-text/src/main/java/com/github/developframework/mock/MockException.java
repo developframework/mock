@@ -1,17 +1,18 @@
 package com.github.developframework.mock;
 
-import com.github.developframework.toolkit.base.exception.FormatRuntimeException;
-
 /**
+ *
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
-public class MockException extends FormatRuntimeException {
+public class MockException extends RuntimeException {
 
     public MockException(String message) {
         super(message);
     }
 
     public MockException(String format, Object... args) {
-        super(format, args);
+        super(String.format(format, args));
     }
 }

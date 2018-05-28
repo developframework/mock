@@ -2,23 +2,26 @@ package com.github.developframework.mock.random;
 
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockPlaceholder;
-import com.github.developframework.toolkit.base.region.Area;
-import com.github.developframework.toolkit.base.region.RegionModule;
+import com.github.developframework.regiondata.ChinaRegionProvider;
+import com.github.developframework.regiondata.County;
 import org.apache.commons.lang3.RandomUtils;
 
 import java.util.List;
 
 /**
+ * 随机地址生成器
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class AddressRandomGenerator implements RandomGenerator<String>{
 
-    private RegionModule regionModule = new RegionModule();
+    private static ChinaRegionProvider chinaRegionProvider = new ChinaRegionProvider();
 
-    private List<Area> areas;
+    private List<County> counties;
 
     public AddressRandomGenerator() {
-        areas = regionModule.getCountry().allAreas();
+        counties = chinaRegionProvider.getChina().getAllCounties();
     }
 
     @Override
@@ -27,17 +30,17 @@ public class AddressRandomGenerator implements RandomGenerator<String>{
         if(level < 1 || level > 3) {
             level = 3;
         }
-        Area randomArea = areas.get(RandomUtils.nextInt(0, areas.size()));
+        County randomCounty = counties.get(RandomUtils.nextInt(0, counties.size()));
         String result = null;
         switch(level) {
             case 1: {
-                result = randomArea.getName();
+                result = randomCounty.getName();
             }break;
             case 2: {
-                result = randomArea.getCity().getName() + randomArea.getName();
+                result = randomCounty.getCity().getName() + randomCounty.getName();
             }break;
             case 3: {
-                result = randomArea.getCity().getProvince().getName() + randomArea.getCity().getName() + randomArea.getName();
+                result = randomCounty.getCity().getProvince().getName() + randomCounty.getCity().getName() + randomCounty.getName();
             }break;
         }
         return result;

@@ -1,7 +1,7 @@
 package com.github.developframework.mock;
 
-import com.github.developframework.mock.random.RandomGeneratorRegistry;
 import com.github.developframework.mock.random.RandomGenerator;
+import com.github.developframework.mock.random.RandomGeneratorRegistry;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +11,9 @@ import java.util.regex.Pattern;
 
 /**
  * 一个任务
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class MockTask {
 

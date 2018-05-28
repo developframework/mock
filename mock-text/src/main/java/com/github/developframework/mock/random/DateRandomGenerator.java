@@ -8,7 +8,10 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import java.util.Date;
 
 /**
+ * 随机日期生成器
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class DateRandomGenerator extends DateTimeRandomGenerator {
 

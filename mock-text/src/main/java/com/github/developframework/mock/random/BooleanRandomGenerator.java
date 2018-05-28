@@ -6,6 +6,7 @@ import org.apache.commons.lang3.RandomUtils;
 
 /**
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class BooleanRandomGenerator implements RandomGenerator<Boolean> {
 

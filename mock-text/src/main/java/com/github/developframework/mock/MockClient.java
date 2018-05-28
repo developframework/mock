@@ -11,7 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * 客户端
+ *
  * @author qiuzhenhao
+ *
+ * @since 0.1
  */
 public class MockClient {
 
@@ -23,19 +27,19 @@ public class MockClient {
         return mockTask.run();
     }
 
-    public List<String> mock(String template, int size) {
+    public List<String> mock(String template, int quantity) {
         List<String> list = new LinkedList<>();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < quantity; i++) {
             list.add(mock(template));
         }
         return list;
     }
     /**
      * 从输入流构建
-     * @param inputStream
-     * @param charset
-     * @return
-     * @throws IOException
+     * @param inputStream 输入流
+     * @param charset 编码
+     * @return 生成的随机值
+     * @throws IOException IO异常
      */
     public String mock(InputStream inputStream, Charset charset) throws IOException {
         StringBuffer templateBuffer = new StringBuffer();
@@ -45,11 +49,11 @@ public class MockClient {
 
     /**
      * 从输入流批量构建
-     * @param inputStream
-     * @param charset
-     * @param quantity
-     * @return
-     * @throws IOException
+     * @param inputStream 输入流
+     * @param charset 编码
+     * @param quantity 数量
+     * @return 生成的随机值
+     * @throws IOException IO异常
      */
     public List<String> mock(InputStream inputStream, Charset charset, int quantity) throws IOException {
         StringBuffer templateBuffer = new StringBuffer();

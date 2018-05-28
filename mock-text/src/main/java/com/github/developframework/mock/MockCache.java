@@ -6,7 +6,10 @@ import lombok.Data;
 import java.util.HashMap;
 
 /**
+ * 缓存
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class MockCache extends HashMap<String, MockCache.Cache> {
 

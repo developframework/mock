@@ -6,7 +6,9 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * 字符串随机生成器
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class StringRandomGenerator implements RandomGenerator<String>{
 

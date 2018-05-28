@@ -117,6 +117,14 @@ ${ number | min=0, max=100, decimals}
 ${ boolean }
 ```
 
+#### **enum**
+
+随机枚举值
+
+```
+${ enum | AAA, BBB, CCC }
+```
+
 #### **date**
 
 随机日期
@@ -131,12 +139,22 @@ ${ date | range=1y, pattern=yyyy-MM-dd, future }
 | pattern  | 日期格式化                                       | yyyy-MM-dd | ${ date \| pattern=yyyy/MM/dd } | 2018/03/20 |
 | future   | 随机一个未来的日期，默认是已过的日期             | false      | ${ date \| future }             | 2018-05-16 |
 
-#### **datetime**
+#### **time**
 
 随机时间
 
 ```
-${ datetime | range=1y, pattern=yyyy-MM-dd, future }
+${ time | range=1h, pattern=HH:mm:ss, future }
+```
+
+可用参数和**date**类型一致，区别是`pattern`参数默认值是HH:mm:ss， `range`的默认值是1h
+
+#### **datetime**
+
+随机日期和时间
+
+```
+${ datetime | range=1y, pattern=yyyy-MM-dd HH:mm:ss, future }
 ```
 
 可用参数和**date**类型一致，区别是`pattern`参数默认值是yyyy-MM-dd HH:mm:ss
@@ -196,6 +214,8 @@ ${ address | level=3 }
 | 可用参数 | 说明     | 默认值 | 随机示例                | 示例结果           |
 | -------- | -------- | ------ | ----------------------- | ------------------ |
 | level    | 地址层数 | 3      | ${ address \| level=3 } | 浙江省杭州市富阳区 |
+
+数据提供器参见独立项目[chinese-administrative-region](https://github.com/developframework/chinese-administrative-region)
 
 #### **quote**
 

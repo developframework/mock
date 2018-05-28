@@ -13,6 +13,7 @@ import java.util.Optional;
  * 数值随机生成器
  *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class NumberRandomGenerator implements RandomGenerator<Number> {
 

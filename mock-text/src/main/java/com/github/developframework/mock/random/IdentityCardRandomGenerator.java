@@ -12,7 +12,10 @@ import java.text.ParseException;
 import java.util.Date;
 
 /**
+ * 随机身份证号生成器
+ *
  * @author qiuzhenhao
+ * @since 0.1
  */
 public class IdentityCardRandomGenerator extends DateTimeRandomGenerator{
 
@@ -21,7 +24,9 @@ public class IdentityCardRandomGenerator extends DateTimeRandomGenerator{
     public String randomValue(MockPlaceholder mockPlaceholder, MockCache mockCache) {
         String birthdayRef = mockPlaceholder.getParameterOrDefault("birthday-ref", String.class, "random");
         String range = mockPlaceholder.getParameterOrDefault("range", String.class, "30y");
-        return getBirthday(birthdayRef, range, mockCache);
+        String birthday = getBirthday(birthdayRef, range, mockCache);
+        return RandomStringUtils.randomNumeric(6) + birthday + RandomStringUtils.randomNumeric(3)
+                + RandomStringUtils.random(1, new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'X'});
     }
 
     @Override
@@ -49,9 +54,8 @@ public class IdentityCardRandomGenerator extends DateTimeRandomGenerator{
                 e.printStackTrace();
             }
         }
-        birthday = DateFormatUtils.format(date, "yyyyMMdd");
+        return DateFormatUtils.format(date, "yyyyMMdd");
 
-        return RandomStringUtils.randomNumeric(6) + birthday + RandomStringUtils.randomNumeric(3)
-                + RandomStringUtils.random(1, new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'X'});
+
     }
 }
