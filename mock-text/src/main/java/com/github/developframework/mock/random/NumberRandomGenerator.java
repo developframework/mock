@@ -3,6 +3,7 @@ package com.github.developframework.mock.random;
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockException;
 import com.github.developframework.mock.MockPlaceholder;
+import com.github.developframework.mock.RandomGeneratorRegistry;
 import org.apache.commons.lang3.RandomUtils;
 
 import java.math.BigDecimal;
@@ -17,15 +18,20 @@ import java.util.Optional;
  */
 public class NumberRandomGenerator implements RandomGenerator<Number> {
 
+    private static final String PARAMETER_MAX = "max";
+    private static final String PARAMETER_MIN = "min";
+    private static final String PARAMETER_DIGIT = "digit";
+    private static final String PARAMETER_DECIMALS = "decimals";
+
     @Override
-    public Number randomValue(MockPlaceholder mockPlaceholder, MockCache cache) {
-        Number min = mockPlaceholder.getParameterOrDefault("min", Number.class, 0);
-        Number max = mockPlaceholder.getParameterOrDefault("max", Number.class, 100);
-        Optional<Integer> digitOptional = mockPlaceholder.getParameter("digit", Integer.class);
+    public Number randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache cache) {
+        Number min = mockPlaceholder.getParameterOrDefault(PARAMETER_MIN, Number.class, 0);
+        Number max = mockPlaceholder.getParameterOrDefault(PARAMETER_MAX, Number.class, 100);
+        Optional<Integer> digitOptional = mockPlaceholder.getParameter(PARAMETER_DIGIT, Integer.class);
         if(min.doubleValue() > max.doubleValue()) {
             throw new MockException("min value greater than max value.");
         }
-        boolean isDecimals = mockPlaceholder.getParameterOrDefault("decimals", boolean.class, false);
+        boolean isDecimals = mockPlaceholder.getParameterOrDefault(PARAMETER_DECIMALS, boolean.class, false);
         Number result = new Double(RandomUtils.nextDouble(min.doubleValue(), max.doubleValue()));
         if (isDecimals) {
             if(digitOptional.isPresent()) {
@@ -40,5 +46,10 @@ public class NumberRandomGenerator implements RandomGenerator<Number> {
     @Override
     public String name() {
         return "number";
+    }
+
+    @Override
+    public String forString(MockPlaceholder mockPlaceholder, Number value) {
+        return String.valueOf(value);
     }
 }

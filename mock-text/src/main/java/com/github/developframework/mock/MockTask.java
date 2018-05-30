@@ -1,7 +1,6 @@
 package com.github.developframework.mock;
 
 import com.github.developframework.mock.random.RandomGenerator;
-import com.github.developframework.mock.random.RandomGeneratorRegistry;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,18 +30,24 @@ public class MockTask {
         this.template = template;
     }
 
+    /**
+     * 运行任务
+     *
+     * @return 随机生成结果
+     */
     public String run() {
         List<MockPlaceholder> mockPlaceholders = extractPlaceholder(template);
         String result = template;
         for (MockPlaceholder mockPlaceholder : mockPlaceholders) {
             RandomGenerator randomGenerator = randomGeneratorRegistry.getRandomGenerator(mockPlaceholder.getName());
             Optional<String> idOptional = mockPlaceholder.getId();
-            Object value = randomGenerator.randomValue(mockPlaceholder, cache);
+            Object value = randomGenerator.randomValue(randomGeneratorRegistry, mockPlaceholder, cache);
             // 加入缓存
             if (idOptional.isPresent()) {
                 cache.put(idOptional.get(), new MockCache.Cache(value, mockPlaceholder));
             }
-            result = result.replace(mockPlaceholder.getPlaceholder(), value.toString());
+            final String stringValue = randomGenerator.forString(mockPlaceholder, value);
+            result = result.replace(mockPlaceholder.getPlaceholder(), stringValue);
         }
         return result;
     }

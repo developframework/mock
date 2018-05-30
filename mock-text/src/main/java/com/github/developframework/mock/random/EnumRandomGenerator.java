@@ -2,6 +2,7 @@ package com.github.developframework.mock.random;
 
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockPlaceholder;
+import com.github.developframework.mock.RandomGeneratorRegistry;
 import org.apache.commons.lang3.RandomUtils;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class EnumRandomGenerator implements RandomGenerator<String> {
 
 
     @Override
-    public String randomValue(MockPlaceholder mockPlaceholder, MockCache mockCache) {
+    public String randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache mockCache) {
         List<String> enums = new ArrayList<>(mockPlaceholder.getParameters().keySet());
         int index = RandomUtils.nextInt(0, enums.size());
         return enums.get(index);
@@ -26,5 +27,10 @@ public class EnumRandomGenerator implements RandomGenerator<String> {
     @Override
     public String name() {
         return "enum";
+    }
+
+    @Override
+    public String forString(MockPlaceholder mockPlaceholder, String value) {
+        return value;
     }
 }

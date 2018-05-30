@@ -2,6 +2,7 @@ package com.github.developframework.mock.random;
 
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockPlaceholder;
+import com.github.developframework.mock.RandomGeneratorRegistry;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 
@@ -23,12 +24,17 @@ public class MobileRandomGenerator implements RandomGenerator<String> {
     };
 
     @Override
-    public String randomValue(MockPlaceholder mockPlaceholder, MockCache mockCache) {
+    public String randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache mockCache) {
         return PREFIX[RandomUtils.nextInt(0, PREFIX.length)] + RandomStringUtils.randomNumeric(8);
     }
 
     @Override
     public String name() {
         return "mobile";
+    }
+
+    @Override
+    public String forString(MockPlaceholder mockPlaceholder, String value) {
+        return value;
     }
 }

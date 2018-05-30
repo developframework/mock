@@ -3,6 +3,7 @@ package com.github.developframework.mock.random;
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockException;
 import com.github.developframework.mock.MockPlaceholder;
+import com.github.developframework.mock.RandomGeneratorRegistry;
 
 import java.util.Optional;
 
@@ -13,9 +14,12 @@ import java.util.Optional;
  * @since 0.1
  */
 public class QuoteRandomGenerator implements RandomGenerator<Object>{
+
+    private static final String PARAMETER_REF = "ref";
+
     @Override
-    public Object randomValue(MockPlaceholder mockPlaceholder, MockCache mockCache) {
-        Optional<String> idOptional = mockPlaceholder.getParameter("ref", String.class);
+    public Object randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache mockCache) {
+        Optional<String> idOptional = mockPlaceholder.getParameter(PARAMETER_REF, String.class);
         if (idOptional.isPresent()) {
             MockCache.Cache cache = mockCache.get(idOptional.get());
             if(cache == null) {
@@ -29,5 +33,10 @@ public class QuoteRandomGenerator implements RandomGenerator<Object>{
     @Override
     public String name() {
         return "quote";
+    }
+
+    @Override
+    public String forString(MockPlaceholder mockPlaceholder, Object value) {
+        return String.valueOf(value);
     }
 }

@@ -2,6 +2,7 @@ package com.github.developframework.mock.random;
 
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockPlaceholder;
+import com.github.developframework.mock.RandomGeneratorRegistry;
 import com.github.developframework.regiondata.ChinaRegionProvider;
 import com.github.developframework.regiondata.County;
 import org.apache.commons.lang3.RandomUtils;
@@ -14,7 +15,9 @@ import java.util.List;
  * @author qiuzhenhao
  * @since 0.1
  */
-public class AddressRandomGenerator implements RandomGenerator<String>{
+public class AddressRandomGenerator implements RandomGenerator<County>{
+
+    private static final String PARAMETER_LEVEL = "level";
 
     private static ChinaRegionProvider chinaRegionProvider = new ChinaRegionProvider();
 
@@ -25,29 +28,30 @@ public class AddressRandomGenerator implements RandomGenerator<String>{
     }
 
     @Override
-    public String randomValue(MockPlaceholder mockPlaceholder, MockCache mockCache) {
-        int level = mockPlaceholder.getParameterOrDefault("level", int.class, 3);
-        if(level < 1 || level > 3) {
-            level = 3;
-        }
-        County randomCounty = counties.get(RandomUtils.nextInt(0, counties.size()));
-        String result = null;
-        switch(level) {
-            case 1: {
-                result = randomCounty.getName();
-            }break;
-            case 2: {
-                result = randomCounty.getCity().getName() + randomCounty.getName();
-            }break;
-            case 3: {
-                result = randomCounty.getCity().getProvince().getName() + randomCounty.getCity().getName() + randomCounty.getName();
-            }break;
-        }
-        return result;
+    public County randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache mockCache) {
+        return counties.get(RandomUtils.nextInt(0, counties.size()));
     }
 
     @Override
     public String name() {
         return "address";
+    }
+
+    @Override
+    public String forString(MockPlaceholder mockPlaceholder, County value) {
+        int level = mockPlaceholder.getParameterOrDefault(PARAMETER_LEVEL, int.class, 3);
+        String address;
+        switch(level) {
+            case 1: {
+                address = value.getCity().getProvince().getName();
+            }break;
+            case 2: {
+                address = value.getCity().getProvince().getName() + value.getCity().getName();
+            }break;
+            default: {
+                address = value.getCity().getProvince().getName() + value.getCity().getName() + value.getName();
+            }break;
+        }
+        return address;
     }
 }

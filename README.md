@@ -178,30 +178,7 @@ ${ personName | length=3 }
 | 可用参数 | 说明     | 默认值 | 随机示例                    | 示例结果 |
 | -------- | -------- | ------ | --------------------------- | -------- |
 | length   | 名字字数 | 3      | ${ personName \| length=3 } | 王悦议   |
-
-#### **identityCard**
-
-随机身份证号
-
-```
-${ identityCard | birthday-ref=random, range=30y }
-```
-
-| 可用参数     | 说明     | 默认值 | 随机示例                               | 示例结果           |
-| ------------ | -------- | ------ | -------------------------------------- | ------------------ |
-| birthday-ref | 生日依赖 | random | ${ personName \| birthday-ref=random } | 152028201408159388 |
-| range        | 生日范围 | 30y    | ${ identityCard \| range=30y }         | 914951199607233405 |
-
-```java
-String result = mockClient.mock("birthday: ${ date | id=aaa, range=30y }\nidentityCard: ${ identityCard | birthday-ref=aaa}");
-```
-
-```
-birthday: 2014-08-15
-identityCard: 152028201408159388
-```
-
-+ `birthday-ref`可以引用之前出现过的生日日期，生成更加严谨的身份证号
+| onlyName | 只生成名 | false  | ${ personName \| onlyName } | 悦议     |
 
 #### **address**
 
@@ -216,6 +193,32 @@ ${ address | level=3 }
 | level    | 地址层数 | 3      | ${ address \| level=3 } | 浙江省杭州市富阳区 |
 
 数据提供器参见独立项目[chinese-administrative-region](https://github.com/developframework/chinese-administrative-region)
+
+#### **identityCard**
+
+随机身份证号
+
+```
+${ identityCard | birthday-ref=random, range=30y }
+```
+
+| 可用参数     | 说明     | 默认值 | 随机示例                               | 示例结果           |
+| ------------ | -------- | ------ | -------------------------------------- | ------------------ |
+| birthday-ref | 生日依赖 | random | ${ personName \| birthday-ref=random } | 152028201408159388 |
+| address-ref  | 地区依赖 | random | ${ personName \| address-ref=random }  | 152028201408159388 |
+| range        | 生日范围 | 30y    | ${ identityCard \| range=30y }         | 914951199607233405 |
+
+```java
+String result = mockClient.mock("birthday: ${ date | id=aaa, range=30y }\nidentityCard: ${ identityCard | birthday-ref=aaa}");
+```
+
+```
+birthday: 2014-08-15
+identityCard: 152028201408159388
+```
+
++ `birthday-ref`可以引用之前出现过的生日日期，生成更加严谨的身份证号
++ `address-ref`可以引用之前出现过的地址，生成更加严谨的身份证号
 
 #### **quote**
 
@@ -240,10 +243,13 @@ second text: ZRBYQf
 public interface RandomGenerator<T> {
 
     // 描述如何生成随机值
-    T randomValue(MockPlaceholder mockPlaceholder, MockCache mockCache);
+    T randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache mockCache);
 
-    // 占位符类型的名称
+    // 识别占位符的名称
     String name();
+    
+    // 描述随机值如何转换到字符串
+    String forString(MockPlaceholder mockPlaceholder, T value);
 }
 ```
 
@@ -261,6 +267,11 @@ public class MyRandomGenerator implements RandomGenerator<String>{
     @Override
     public String name() {
         return "myPlaceholder";
+    }
+    
+    @Override
+    String forString(MockPlaceholder mockPlaceholder, T value) {
+        return value;
     }
 }
 ```

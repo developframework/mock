@@ -2,6 +2,7 @@ package com.github.developframework.mock.random;
 
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockPlaceholder;
+import com.github.developframework.mock.RandomGeneratorRegistry;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
@@ -12,13 +13,19 @@ import org.apache.commons.lang3.RandomStringUtils;
  */
 public class StringRandomGenerator implements RandomGenerator<String>{
 
+    private static final String PARAMETER_LENGTH = "length";
+    private static final String PARAMETER_UPPERCASE = "uppercase";
+    private static final String PARAMETER_LOWERCASE = "lowercase";
+    private static final String PARAMETER_LETTERS = "letters";
+    private static final String PARAMETER_NUMBERS = "numbers";
+
     @Override
-    public String randomValue(MockPlaceholder mockPlaceholder, MockCache cache) {
-        int length = mockPlaceholder.getParameterOrDefault("length", int.class, 6);
-        boolean uppercase = mockPlaceholder.getParameterOrDefault("uppercase", boolean.class, false);
-        boolean lowercase = mockPlaceholder.getParameterOrDefault("lowercase", boolean.class, false);
-        boolean letters = mockPlaceholder.getParameterOrDefault("letters", boolean.class, false);
-        boolean numbers = mockPlaceholder.getParameterOrDefault("numbers", boolean.class, false);
+    public String randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache cache) {
+        int length = mockPlaceholder.getParameterOrDefault(PARAMETER_LENGTH, int.class, 6);
+        boolean uppercase = mockPlaceholder.getParameterOrDefault(PARAMETER_UPPERCASE, boolean.class, false);
+        boolean lowercase = mockPlaceholder.getParameterOrDefault(PARAMETER_LOWERCASE, boolean.class, false);
+        boolean letters = mockPlaceholder.getParameterOrDefault(PARAMETER_LETTERS, boolean.class, false);
+        boolean numbers = mockPlaceholder.getParameterOrDefault(PARAMETER_NUMBERS, boolean.class, false);
 
         if(!letters && !numbers) {
             letters = true;
@@ -38,5 +45,10 @@ public class StringRandomGenerator implements RandomGenerator<String>{
     @Override
     public String name() {
         return "string";
+    }
+
+    @Override
+    public String forString(MockPlaceholder mockPlaceholder, String value) {
+        return value;
     }
 }

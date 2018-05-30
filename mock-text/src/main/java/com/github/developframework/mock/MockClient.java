@@ -1,6 +1,5 @@
 package com.github.developframework.mock;
 
-import com.github.developframework.mock.random.RandomGeneratorRegistry;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 

@@ -1,7 +1,7 @@
 package com.github.developframework.mock.db;
 
 import com.github.developframework.mock.MockClient;
-import com.github.developframework.mock.random.RandomGeneratorRegistry;
+import com.github.developframework.mock.RandomGeneratorRegistry;
 import lombok.Getter;
 
 /**

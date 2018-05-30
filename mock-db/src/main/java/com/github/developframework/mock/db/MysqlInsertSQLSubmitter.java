@@ -1,7 +1,7 @@
 package com.github.developframework.mock.db;
 
 import com.github.developframework.mock.MockTask;
-import com.github.developframework.mock.random.RandomGeneratorRegistry;
+import com.github.developframework.mock.RandomGeneratorRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 

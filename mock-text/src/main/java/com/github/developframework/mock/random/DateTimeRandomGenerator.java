@@ -3,6 +3,7 @@ package com.github.developframework.mock.random;
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockException;
 import com.github.developframework.mock.MockPlaceholder;
+import com.github.developframework.mock.RandomGeneratorRegistry;
 import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 
@@ -14,18 +15,21 @@ import java.util.Date;
  * @author qiuzhenhao
  * @since 0.1
  */
-public class DateTimeRandomGenerator implements RandomGenerator<String> {
+public class DateTimeRandomGenerator implements RandomGenerator<Date> {
+
+    protected static final String PARAMETER_RANGE = "range";
+    protected static final String PARAMETER_FUTURE = "future";
+    protected static final String PARAMETER_PATTERN = "pattern";
 
     @Override
-    public String randomValue(MockPlaceholder mockPlaceholder, MockCache cache) {
-        String range = mockPlaceholder.getParameterOrDefault("range", String.class, "1y");
-        String pattern = mockPlaceholder.getParameterOrDefault("pattern", String.class, "yyyy-MM-dd HH:mm:ss");
-        boolean future = mockPlaceholder.getParameterOrDefault("future", boolean.class, false);
+    public Date randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache cache) {
+        String range = mockPlaceholder.getParameterOrDefault(PARAMETER_RANGE, String.class, "1y");
+        boolean future = mockPlaceholder.getParameterOrDefault(PARAMETER_FUTURE, boolean.class, false);
 
         long max = calcRange(range);
         long d = RandomUtils.nextLong(1000, max);
         long dateLong = System.currentTimeMillis() + (future ? d : -d);
-        return DateFormatUtils.format(new Date(dateLong), pattern);
+        return new Date(dateLong);
     }
 
     @Override
@@ -33,8 +37,14 @@ public class DateTimeRandomGenerator implements RandomGenerator<String> {
         return "datetime";
     }
 
+    @Override
+    public String forString(MockPlaceholder mockPlaceholder, Date value) {
+        String pattern = mockPlaceholder.getParameterOrDefault(PARAMETER_PATTERN, String.class, "yyyy-MM-dd HH:mm:ss");
+        return DateFormatUtils.format(value, pattern);
+    }
+
     protected long calcRange(String range) {
-        if (range.matches("(\\d+y)?(\\d+M)?(\\d+d)?(\\d+h)?(\\d+m)?(\\d+s)?")) {
+        if (range.matches("^(\\d+y)?(\\d+M)?(\\d+d)?(\\d+h)?(\\d+m)?(\\d+s)?$")) {
             int temp = 0;
             long sum = 0;
             for (int i = 0; i < range.length(); i++) {

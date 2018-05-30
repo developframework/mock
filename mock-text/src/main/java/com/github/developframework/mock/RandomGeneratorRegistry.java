@@ -1,6 +1,6 @@
-package com.github.developframework.mock.random;
+package com.github.developframework.mock;
 
-import com.github.developframework.mock.MockException;
+import com.github.developframework.mock.random.*;
 
 import java.util.HashMap;
 import java.util.Map;

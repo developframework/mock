@@ -1,8 +1,7 @@
 package com.github.developframework.mock.db;
 
-import com.github.developframework.mock.MockPlaceholder;
 import com.github.developframework.mock.MockTask;
-import com.github.developframework.mock.random.RandomGeneratorRegistry;
+import com.github.developframework.mock.RandomGeneratorRegistry;
 import com.github.developframework.toolkit.base.components.KeyValuePair;
 
 import java.sql.SQLException;
