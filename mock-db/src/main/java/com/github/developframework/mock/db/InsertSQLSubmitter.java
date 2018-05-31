@@ -1,5 +1,6 @@
 package com.github.developframework.mock.db;
 
+import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockTask;
 import com.github.developframework.mock.RandomGeneratorRegistry;
 import com.github.developframework.toolkit.base.components.KeyValuePair;
@@ -23,8 +24,11 @@ public abstract class InsertSQLSubmitter {
 
     protected DBInfo dbInfo;
 
-    public InsertSQLSubmitter(RandomGeneratorRegistry randomGeneratorRegistry, DBInfo dbInfo) {
+    protected MockCache cache;
+
+    public InsertSQLSubmitter(RandomGeneratorRegistry randomGeneratorRegistry, MockCache cache, DBInfo dbInfo) {
         this.randomGeneratorRegistry = randomGeneratorRegistry;
+        this.cache = cache;
         this.dbInfo = dbInfo;
     }
 
@@ -39,7 +43,7 @@ public abstract class InsertSQLSubmitter {
     }
 
     public InsertSQLSubmitter field(String field, String template) {
-        this.fields.add(new KeyValuePair<>(field, new MockTask(randomGeneratorRegistry, template)));
+        this.fields.add(new KeyValuePair<>(field, new MockTask(randomGeneratorRegistry, cache, template)));
         return this;
     }
 

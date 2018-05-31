@@ -22,11 +22,11 @@ public class MockTask {
 
     private String template;
 
-    private MockCache cache = new MockCache();
+    private MockCache cache;
 
-
-    public MockTask(RandomGeneratorRegistry randomGeneratorRegistry, String template) {
+    public MockTask(RandomGeneratorRegistry randomGeneratorRegistry, MockCache cache, String template) {
         this.randomGeneratorRegistry = randomGeneratorRegistry;
+        this.cache = cache;
         this.template = template;
     }
 

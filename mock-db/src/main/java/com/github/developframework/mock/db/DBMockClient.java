@@ -1,10 +1,11 @@
 package com.github.developframework.mock.db;
 
 import com.github.developframework.mock.MockClient;
-import com.github.developframework.mock.RandomGeneratorRegistry;
 import lombok.Getter;
 
 /**
+ * 数据库随机数据客户端
+ *
  * @author qiuzhenhao
  */
 public class DBMockClient extends MockClient{
@@ -16,10 +17,12 @@ public class DBMockClient extends MockClient{
         this.dbInfo = new DBInfo(driver, url, user, password);
     }
 
-    @Getter
-    private RandomGeneratorRegistry randomGeneratorRegistry = new RandomGeneratorRegistry();
-
-    public MysqlInsertSQLSubmitter byMysql() {
-        return new MysqlInsertSQLSubmitter(randomGeneratorRegistry, dbInfo);
+    /**
+     * mysql insert语句的提交器
+     *
+     * @return 提交器
+     */
+    public MysqlInsertSQLSubmitter insertByMysql() {
+        return new MysqlInsertSQLSubmitter(randomGeneratorRegistry, mockCache, dbInfo);
     }
 }

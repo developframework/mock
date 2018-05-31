@@ -19,13 +19,33 @@ import java.util.List;
 public class MockClient {
 
     @Getter
-    private RandomGeneratorRegistry randomGeneratorRegistry = new RandomGeneratorRegistry();
+    protected RandomGeneratorRegistry randomGeneratorRegistry = new RandomGeneratorRegistry();
 
+    protected MockCache mockCache = new MockCache();
+
+    /**
+     * 清空缓存
+     */
+    public void clearCache() {
+        mockCache.clear();
+    }
+
+    /**
+     * 依据模板填充随机值
+     * @param template 模板
+     * @return 随机值字符串
+     */
     public String mock(String template) {
-        MockTask mockTask = new MockTask(randomGeneratorRegistry, template);
+        MockTask mockTask = new MockTask(randomGeneratorRegistry, mockCache, template);
         return mockTask.run();
     }
 
+    /**
+     * 依据模板批量填充随机值
+     * @param template 模板
+     * @param quantity 数量
+     * @return 随机值字符串列表
+     */
     public List<String> mock(String template, int quantity) {
         List<String> list = new LinkedList<>();
         for (int i = 0; i < quantity; i++) {

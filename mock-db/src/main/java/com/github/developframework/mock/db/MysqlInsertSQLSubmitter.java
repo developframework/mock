@@ -1,5 +1,6 @@
 package com.github.developframework.mock.db;
 
+import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockTask;
 import com.github.developframework.mock.RandomGeneratorRegistry;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +20,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MysqlInsertSQLSubmitter extends InsertSQLSubmitter {
 
-    public MysqlInsertSQLSubmitter(RandomGeneratorRegistry randomGeneratorRegistry, DBInfo dbInfo) {
-        super(randomGeneratorRegistry, dbInfo);
+    public MysqlInsertSQLSubmitter(RandomGeneratorRegistry randomGeneratorRegistry, MockCache cache, DBInfo dbInfo) {
+        super(randomGeneratorRegistry, cache, dbInfo);
     }
 
     private String build() {
