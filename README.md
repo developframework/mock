@@ -60,11 +60,12 @@ List<String> list = mockClient.mock(inputStream, charset, quantity);
 占位符的格式：
 
 ```
-${<type> | [param1=value1, param2=value2]}
+${ <type> | [ param1=value1, param2='value2' ] }
 ```
 
 + type是占位符的类型
 + param=value是可选的参数，对随机值做约束，boolean型的`param=true`可以省略直接写`param`
++ Mock可以自动识别所填参数是什么基本类型，在有歧义的情况下，最好还是用单引号申明字符串值，比如`'1234'`
 
 比如：
 
@@ -99,15 +100,16 @@ ${ string | length=10, letters, numbers, uppercase, lowercase }
 随机数值
 
 ```
-${ number | min=0, max=100, decimals}
+${ number | min=0, max=100, decimals }
 ```
 
-| 可用参数 | 说明     | 默认值           | 随机示例                           | 示例结果          |
-| -------- | -------- | ---------------- | ---------------------------------- | ----------------- |
-| min      | 最小值   | 0                | ${ number \| min=0 }               | 4                 |
-| max      | 最大值   | Double.MAX_VALUE | ${ number \| min=100 }             | 20                |
-| decimals | 采用小数 | false            | ${ number \| decimals }            | 82.30656374435402 |
-| digit    | 有效位数 | null             | ${ number \| decimals, digit = 2 } | 91.02             |
+| 可用参数 | 说明         | 默认值           | 随机示例                           | 示例结果          |
+| -------- | ------------ | ---------------- | ---------------------------------- | ----------------- |
+| min      | 最小值       | 0                | ${ number \| min=0 }               | 4                 |
+| max      | 最大值       | Double.MAX_VALUE | ${ number \| min=100 }             | 20                |
+| decimals | 采用小数     | false            | ${ number \| decimals }            | 82.30656374435402 |
+| digit    | 有效位数     | null             | ${ number \| decimals, digit = 2 } | 91.02             |
+| fillZero | 整数前面补零 | null             | ${ number \| fillZero = 4 }        | 0096              |
 
 #### **boolean**
 
@@ -188,9 +190,11 @@ ${ personName | length=3 }
 ${ address | level=3 }
 ```
 
-| 可用参数 | 说明     | 默认值 | 随机示例                | 示例结果           |
-| -------- | -------- | ------ | ----------------------- | ------------------ |
-| level    | 地址层数 | 3      | ${ address \| level=3 } | 浙江省杭州市富阳区 |
+| 可用参数 | 说明                               | 默认值 | 随机示例                                         | 示例结果           |
+| -------- | ---------------------------------- | ------ | ------------------------------------------------ | ------------------ |
+| level    | 地址层数                           | 3      | ${ address \| level=3 }                          | 浙江省杭州市富阳区 |
+| province | 限定省份范围                       | null   | ${ address \| province = 浙江省 }                | 浙江省嘉兴市南湖区 |
+| city     | 限定城市范围（要先限定省份才有效） | null   | ${ address \| province = 浙江省, city = 嘉兴市 } | 浙江省嘉兴市南湖区 |
 
 数据提供器参见独立项目[chinese-administrative-region](https://github.com/developframework/chinese-administrative-region)
 
@@ -220,18 +224,35 @@ identityCard: 152028201408159388
 + `birthday-ref`可以引用之前出现过的生日日期，生成更加严谨的身份证号
 + `address-ref`可以引用之前出现过的地址，生成更加严谨的身份证号
 
+#### **ip**
+
+随机IP号
+
+```
+${ ip | prefix = '192.168' }
+```
+
+| 可用参数 | 说明       | 默认值 | 随机示例                        | 示例结果     |
+| -------- | ---------- | ------ | ------------------------------- | ------------ |
+| prefix   | IP前缀网段 | null   | ${ ip \| prefix = '192.168.1' } | 192.168.1.55 |
+
+这里的`prefix`最好使用单引号括起来，避免数字字符串引起类型歧义。
+
 #### **quote**
 
 这个类型本身不生成随机值，引用之前已生成的随机值
 
 ```java
-String result = mockClient.mock("first text: ${ string | id=first }\nsecond text: ${quote | id=first}");
+String firstText = mockClient.mock("first： ${ string | id = first }");
+String secondText = mockClient.mock("quote： ${ quote | ref = first }");
+System.out.println(firstText);
+System.out.println(secondText);
 ```
 给之前的占位符设置一个`id` 在后面使用**quote**类型引用之前的值
 
 ```
-first text: ZRBYQf
-second text: ZRBYQf
+first： GtHQra
+quote： GtHQra
 ```
 
 ### 自定义占位符
