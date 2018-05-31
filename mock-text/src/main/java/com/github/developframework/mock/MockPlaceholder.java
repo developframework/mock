@@ -57,6 +57,8 @@ public class MockPlaceholder {
     private Object guessType(String value) {
         if(StringUtils.isBlank(value)) {
             return null;
+        } else if(value.matches("^'.*'$")) {
+            return value.substring(1, value.length() - 1);
         } else if(value.matches("^\\d+$")) {
             return Integer.valueOf(value);
         } else if(value.matches("^\\d+\\.\\d+$")) {
