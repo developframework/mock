@@ -22,19 +22,21 @@ public class NumberRandomGenerator implements RandomGenerator<Number> {
     private static final String PARAMETER_MIN = "min";
     private static final String PARAMETER_DIGIT = "digit";
     private static final String PARAMETER_DECIMALS = "decimals";
+    private static final String PARAMETER_FILL_ZERO = "fillZero";
+
 
     @Override
     public Number randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache cache) {
         Number min = mockPlaceholder.getParameterOrDefault(PARAMETER_MIN, Number.class, 0);
         Number max = mockPlaceholder.getParameterOrDefault(PARAMETER_MAX, Number.class, 100);
         Optional<Integer> digitOptional = mockPlaceholder.getParameter(PARAMETER_DIGIT, Integer.class);
-        if(min.doubleValue() > max.doubleValue()) {
+        if (min.doubleValue() > max.doubleValue()) {
             throw new MockException("min value greater than max value.");
         }
         boolean isDecimals = mockPlaceholder.getParameterOrDefault(PARAMETER_DECIMALS, boolean.class, false);
         Number result = new Double(RandomUtils.nextDouble(min.doubleValue(), max.doubleValue()));
         if (isDecimals) {
-            if(digitOptional.isPresent()) {
+            if (digitOptional.isPresent()) {
                 return new BigDecimal(result.doubleValue()).setScale(digitOptional.get(), RoundingMode.CEILING);
             } else {
                 return result;
@@ -50,6 +52,11 @@ public class NumberRandomGenerator implements RandomGenerator<Number> {
 
     @Override
     public String forString(MockPlaceholder mockPlaceholder, Number value) {
-        return String.valueOf(value);
+        Optional<Integer> fillZeroOptional = mockPlaceholder.getParameter(PARAMETER_FILL_ZERO, Integer.class);
+        if (fillZeroOptional.isPresent()) {
+            return String.format("%0" + fillZeroOptional.get().intValue() + "d", value.intValue());
+        } else {
+            return String.valueOf(value);
+        }
     }
 }
