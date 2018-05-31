@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class RandomGeneratorRegistry {
 
-    private RandomGenerator[] defaultRandomGenerators = {
+    private static final RandomGenerator[] DEFAULT_RANDOM_GENERATORS = {
             new StringRandomGenerator(),
             new NumberRandomGenerator(),
             new PersonNameRandomGenerator(),
@@ -24,13 +24,14 @@ public class RandomGeneratorRegistry {
             new BooleanRandomGenerator(),
             new QuoteRandomGenerator(),
             new IdentityCardRandomGenerator(),
-            new AddressRandomGenerator()
+            new AddressRandomGenerator(),
+            new IPRandomGenerator(),
     };
 
     private Map<String, RandomGenerator> randomGeneratorMap = new HashMap<>();
 
     public RandomGeneratorRegistry() {
-        for (RandomGenerator randomGenerator : defaultRandomGenerators) {
+        for (RandomGenerator randomGenerator : DEFAULT_RANDOM_GENERATORS) {
             randomGeneratorMap.put(randomGenerator.name(), randomGenerator);
         }
     }
