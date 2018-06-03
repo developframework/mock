@@ -210,15 +210,21 @@ ${ identityCard | birthday-ref=random, range=30y }
 | ------------ | -------- | ------ | -------------------------------------- | ------------------ |
 | birthday-ref | 生日依赖 | random | ${ personName \| birthday-ref=random } | 152028201408159388 |
 | address-ref  | 地区依赖 | random | ${ personName \| address-ref=random }  | 152028201408159388 |
+| sex-ref      | 性别依赖 | random | ${ personName \| sex-ref=FEMALE }      | 152028201408159388 |
 | range        | 生日范围 | 30y    | ${ identityCard \| range=30y }         | 914951199607233405 |
 
 ```java
-String result = mockClient.mock("birthday: ${ date | id=aaa, range=30y }\nidentityCard: ${ identityCard | birthday-ref=aaa}");
+String sex = mockClient.mock("sex: ${ enum | id = anySex, MALE, FEMALE }");
+String address = mockClient.mock("address: ${ address | id = anyAddress, province = 浙江省, city = 嘉兴市 }");
+String birthday = mockClient.mock("birthday: ${ date | id = anyBirthday, range = 30y }");
+String identityCard = mockClient.mock("identityCard: ${ identityCard | address-ref = anyAddress, birthday-ref = anyBirthday, sex-ref = anySex }");
 ```
 
 ```
-birthday: 2014-08-15
-identityCard: 152028201408159388
+sex: FEMALE
+address: 浙江省嘉兴市嘉善县
+birthday: 1989-08-09
+identityCard: 330421198908090074
 ```
 
 + `birthday-ref`可以引用之前出现过的生日日期，生成更加严谨的身份证号

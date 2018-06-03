@@ -13,6 +13,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
             <groupId>com.github.developframework</groupId>
             <artifactId>mock-text</artifactId>
         </dependency>

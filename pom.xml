@@ -14,44 +14,22 @@
     </modules>
 
     <properties>
-        <version.toolkit>0.3</version.toolkit>
-        <version.commons-io>2.5</version.commons-io>
-        <version.commons-lang3>3.7</version.commons-lang3>
-        <version.slf4j-api>1.7.25</version.slf4j-api>
-        <version.chinese-administrative-region-data>1.0.0</version.chinese-administrative-region-data>
+        <version.develop-framework>0.2</version.develop-framework>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>com.github.developframework</groupId>
-                <artifactId>toolkit-base</artifactId>
-                <version>${version.toolkit}</version>
+                <artifactId>develop-framework-platform</artifactId>
+                <version>${version.develop-framework}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>com.github.developframework</groupId>
-                <artifactId>chinese-administrative-region-data</artifactId>
-                <version>${version.chinese-administrative-region-data}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>mock-text</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${version.commons-io}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${version.commons-lang3}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-api</artifactId>
-                <version>${version.slf4j-api}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -66,7 +44,7 @@
             <name>qiuzhenhao</name>
             <email>408000511@qq.com</email>
             <organization>developframework</organization>
-            <organizationUrl>http://www.developframework.org</organizationUrl>
+            <organizationUrl>http://blog.qiushuicloud.xyz</organizationUrl>
         </developer>
     </developers>
 
@@ -86,7 +64,7 @@
         <connection>scm:git:git@github.com:developframework/mock.git</connection>
         <developerConnection>scm:git:git@github.com:developframework/mock.git</developerConnection>
         <url>https://github.com/developframework/mock</url>
-        <tag>${project.version}</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
@@ -103,27 +81,24 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF8</encoding>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.4</version>
+                <version>3.0.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
+                        <phase>verify</phase>
                         <goals>
                             <goal>jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <configuration>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -131,31 +106,17 @@
     <profiles>
         <profile>
             <id>release</id>
+
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-release-plugin</artifactId>
-                        <version>2.3.2</version>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.3</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <aggregate>true</aggregate>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>1.5</version>
                         <executions>

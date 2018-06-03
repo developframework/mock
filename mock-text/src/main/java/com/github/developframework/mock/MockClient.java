@@ -1,6 +1,7 @@
 package com.github.developframework.mock;
 
 import lombok.Getter;
+import lombok.NonNull;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class MockClient {
      * @param template 模板
      * @return 随机值字符串
      */
-    public String mock(String template) {
+    public String mock(@NonNull String template) {
         MockTask mockTask = new MockTask(randomGeneratorRegistry, mockCache, template);
         return mockTask.run();
     }
@@ -46,7 +47,7 @@ public class MockClient {
      * @param quantity 数量
      * @return 随机值字符串列表
      */
-    public List<String> mock(String template, int quantity) {
+    public List<String> mock(@NonNull String template, int quantity) {
         List<String> list = new LinkedList<>();
         for (int i = 0; i < quantity; i++) {
             list.add(mock(template));
