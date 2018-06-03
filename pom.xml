@@ -5,7 +5,7 @@
     <groupId>com.github.developframework</groupId>
     <artifactId>mock</artifactId>
     <packaging>pom</packaging>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
     <modules>
         <module>mock-text</module>
         <module>mock-db</module>
