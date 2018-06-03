@@ -4,6 +4,7 @@ package com.github.developframework.mock.random;
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockPlaceholder;
 import com.github.developframework.mock.RandomGeneratorRegistry;
+import develop.framework.components.EntitySign;
 
 /**
  * 随机生成器
@@ -12,7 +13,7 @@ import com.github.developframework.mock.RandomGeneratorRegistry;
  * @since 0.1
  * @param <T> 随机值类型
  */
-public interface RandomGenerator<T> {
+public interface RandomGenerator<T> extends EntitySign<String> {
 
     /**
      * 描述如何生成随机值
@@ -22,12 +23,6 @@ public interface RandomGenerator<T> {
      * @return 随机值
      */
     T randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache mockCache);
-
-    /**
-     * 识别占位符的名称
-     * @return 名称
-     */
-    String name();
 
     /**
      * 描述随机值如何转换到字符串

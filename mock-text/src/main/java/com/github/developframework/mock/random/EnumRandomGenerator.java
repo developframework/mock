@@ -28,7 +28,7 @@ public class EnumRandomGenerator implements RandomGenerator<String> {
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "enum";
     }
 

@@ -44,7 +44,7 @@ public class IPRandomGenerator implements RandomGenerator<String>{
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "ip";
     }
 

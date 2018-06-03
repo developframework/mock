@@ -28,7 +28,7 @@ public class TimeRandomGenerator extends DateTimeRandomGenerator {
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "time";
     }
 

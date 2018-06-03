@@ -46,7 +46,7 @@ public class NumberRandomGenerator implements RandomGenerator<Number> {
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "number";
     }
 

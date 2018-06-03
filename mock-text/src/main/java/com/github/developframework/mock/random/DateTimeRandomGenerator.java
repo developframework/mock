@@ -33,7 +33,7 @@ public class DateTimeRandomGenerator implements RandomGenerator<Date> {
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "datetime";
     }
 

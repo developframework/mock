@@ -29,7 +29,7 @@ public class MobileRandomGenerator implements RandomGenerator<String> {
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "mobile";
     }
 

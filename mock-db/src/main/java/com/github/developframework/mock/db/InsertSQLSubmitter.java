@@ -3,7 +3,7 @@ package com.github.developframework.mock.db;
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockTask;
 import com.github.developframework.mock.RandomGeneratorRegistry;
-import com.github.developframework.toolkit.base.components.KeyValuePair;
+import develop.framework.components.KeyValuePair;
 
 import java.sql.SQLException;
 import java.util.LinkedList;

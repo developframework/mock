@@ -1,52 +1,39 @@
 package com.github.developframework.mock;
 
 import com.github.developframework.mock.random.*;
-
-import java.util.HashMap;
-import java.util.Map;
+import develop.framework.components.EntityRegistry;
 
 /**
  * 生成器注册器
  * @author qiuzhenhao
  * @since 0.1
  */
-public class RandomGeneratorRegistry {
+public class RandomGeneratorRegistry extends EntityRegistry<RandomGenerator<?>, String> {
 
-    private static final RandomGenerator[] DEFAULT_RANDOM_GENERATORS = {
-            new StringRandomGenerator(),
-            new NumberRandomGenerator(),
-            new PersonNameRandomGenerator(),
-            new MobileRandomGenerator(),
-            new DateTimeRandomGenerator(),
-            new DateRandomGenerator(),
-            new TimeRandomGenerator(),
-            new EnumRandomGenerator(),
-            new BooleanRandomGenerator(),
-            new QuoteRandomGenerator(),
-            new IdentityCardRandomGenerator(),
-            new AddressRandomGenerator(),
-            new IPRandomGenerator(),
-    };
-
-    private Map<String, RandomGenerator> randomGeneratorMap = new HashMap<>();
-
-    public RandomGeneratorRegistry() {
-        for (RandomGenerator randomGenerator : DEFAULT_RANDOM_GENERATORS) {
-            randomGeneratorMap.put(randomGenerator.name(), randomGenerator);
-        }
+    @Override
+    protected RandomGenerator<?>[] defaultEntity() {
+        return new RandomGenerator[] {
+                new StringRandomGenerator(),
+                new NumberRandomGenerator(),
+                new PersonNameRandomGenerator(),
+                new MobileRandomGenerator(),
+                new DateTimeRandomGenerator(),
+                new DateRandomGenerator(),
+                new TimeRandomGenerator(),
+                new EnumRandomGenerator(),
+                new BooleanRandomGenerator(),
+                new QuoteRandomGenerator(),
+                new IdentityCardRandomGenerator(),
+                new AddressRandomGenerator(),
+                new IPRandomGenerator()
+        };
     }
 
     public void customRandomGenerators(RandomGenerator[] customRandomGenerators) {
-        for (RandomGenerator customRandomGenerator : customRandomGenerators) {
-            randomGeneratorMap.put(customRandomGenerator.name(), customRandomGenerator);
-        }
+        super.addCustomEntities(customRandomGenerators);
     }
 
     public RandomGenerator getRandomGenerator(String name) {
-        if (randomGeneratorMap.containsKey(name)) {
-            return randomGeneratorMap.get(name);
-        } else {
-            throw new MockException("\"%s\" generator is not exist.", name);
-        }
+        return super.extractRequired(name, new MockException("\"%s\" generator is not exist.", name));
     }
 }

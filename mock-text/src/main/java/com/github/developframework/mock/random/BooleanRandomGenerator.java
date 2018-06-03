@@ -19,7 +19,7 @@ public class BooleanRandomGenerator implements RandomGenerator<Boolean> {
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "boolean";
     }
 

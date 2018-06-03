@@ -57,7 +57,7 @@ public class AddressRandomGenerator implements RandomGenerator<County>{
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "address";
     }
 

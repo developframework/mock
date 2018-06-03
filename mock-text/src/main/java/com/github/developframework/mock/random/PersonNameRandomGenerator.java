@@ -94,7 +94,7 @@ public class PersonNameRandomGenerator implements RandomGenerator<String> {
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "personName";
     }
 

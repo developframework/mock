@@ -31,7 +31,7 @@ public class QuoteRandomGenerator implements RandomGenerator<Object>{
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "quote";
     }
 

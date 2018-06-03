@@ -1,11 +1,12 @@
 package com.github.developframework.mock.db;
 
-import com.github.developframework.toolkit.base.exception.FormatRuntimeException;
+
+import com.github.developframework.mock.MockException;
 
 /**
  * @author qiuzhenhao
  */
-public class DBMockException extends FormatRuntimeException {
+public class DBMockException extends MockException {
 
     public DBMockException(String message) {
         super(message);

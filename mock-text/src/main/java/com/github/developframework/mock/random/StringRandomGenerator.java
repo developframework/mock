@@ -43,7 +43,7 @@ public class StringRandomGenerator implements RandomGenerator<String>{
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "string";
     }
 

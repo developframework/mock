@@ -33,7 +33,7 @@ public class IdentityCardRandomGenerator implements RandomGenerator<IdentityCard
     }
 
     @Override
-    public String name() {
+    public String key() {
         return "identityCard";
     }
 

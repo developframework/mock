@@ -14,7 +14,7 @@ import java.util.Date;
 public class DateRandomGenerator extends DateTimeRandomGenerator {
 
     @Override
-    public String name() {
+    public String key() {
         return "date";
     }
 
