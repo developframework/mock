@@ -31,6 +31,11 @@
                 <artifactId>mock-text</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.developframework</groupId>
+                <artifactId>mock-db</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
