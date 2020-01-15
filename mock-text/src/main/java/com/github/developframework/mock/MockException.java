@@ -1,6 +1,7 @@
 package com.github.developframework.mock;
 
-import develop.framework.commons.exceptions.FormatRuntimeException;
+
+import develop.toolkit.base.exception.FormatRuntimeException;
 
 /**
  * Mock异常

@@ -1,7 +1,7 @@
 package com.github.developframework.mock;
 
 import com.github.developframework.mock.random.*;
-import develop.framework.components.EntityRegistry;
+import develop.toolkit.base.components.EntityRegistry;
 
 /**
  * 生成器注册器
@@ -29,11 +29,11 @@ public class RandomGeneratorRegistry extends EntityRegistry<RandomGenerator<?>, 
         };
     }
 
-    public void customRandomGenerators(RandomGenerator[] customRandomGenerators) {
+    public void customRandomGenerators(RandomGenerator<?>[] customRandomGenerators) {
         super.addCustomEntities(customRandomGenerators);
     }
 
-    public RandomGenerator getRandomGenerator(String name) {
+    public RandomGenerator<?> getRandomGenerator(String name) {
         return super.extractRequired(name, new MockException("\"%s\" generator is not exist.", name));
     }
 }

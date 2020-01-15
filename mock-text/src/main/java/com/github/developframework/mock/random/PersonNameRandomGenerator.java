@@ -4,15 +4,12 @@ import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockException;
 import com.github.developframework.mock.MockPlaceholder;
 import com.github.developframework.mock.RandomGeneratorRegistry;
-import org.apache.commons.io.IOUtils;
+import develop.toolkit.base.utils.IOAdvice;
 import org.apache.commons.lang3.RandomUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 人名随机生成器
@@ -34,35 +31,31 @@ public class PersonNameRandomGenerator implements RandomGenerator<String> {
         List<String> maleNameList = new LinkedList<>();
         List<String> femaleNameList = new LinkedList<>();
         int flag = 0;
-        try (InputStream is = getClass().getResourceAsStream("/person_name_chinese.txt")) {
-            List<String> list = IOUtils.readLines(is, Charset.forName("UTF-8"));
-            for (String line : list) {
-                if (line.startsWith("--")) {
-                    flag++;
-                    continue;
-                }
-                String[] words = line.split("");
-                switch (flag) {
-                    case 0: {
-                        familyNameList.addAll(Arrays.asList(words));
-                    }
-                    break;
-                    case 1: {
-                        maleNameList.addAll(Arrays.asList(words));
-                    }
-                    break;
-                    case 2: {
-                        femaleNameList.addAll(Arrays.asList(words));
-                    }
-                    break;
-                }
+        List<String> list = IOAdvice.readLinesFromClasspath("/person_name_chinese.txt").collect(Collectors.toList());
+        for (String line : list) {
+            if (line.startsWith("--")) {
+                flag++;
+                continue;
             }
-        } catch (IOException e) {
-            throw new MockException("mock client read resource \"person_name_chinese.txt\" failed, " + e.getMessage());
+            String[] words = line.split("");
+            switch (flag) {
+                case 0: {
+                    familyNameList.addAll(List.of(words));
+                }
+                break;
+                case 1: {
+                    maleNameList.addAll(List.of(words));
+                }
+                break;
+                case 2: {
+                    femaleNameList.addAll(List.of(words));
+                }
+                break;
+            }
         }
-        this.familyNameLib = familyNameList.toArray(new String[familyNameList.size()]);
-        this.maleNameLib = maleNameList.toArray(new String[maleNameList.size()]);
-        this.femaleNameLib = femaleNameList.toArray(new String[femaleNameList.size()]);
+        this.familyNameLib = familyNameList.toArray(String[]::new);
+        this.maleNameLib = maleNameList.toArray(String[]::new);
+        this.femaleNameLib = femaleNameList.toArray(String[]::new);
     }
 
     @Override
@@ -77,8 +70,10 @@ public class PersonNameRandomGenerator implements RandomGenerator<String> {
         switch (sex) {
             case "MALE":
                 isMale = true;
+                break;
             case "FEMALE":
                 isMale = false;
+                break;
             default:
                 isMale = RandomUtils.nextBoolean();
         }

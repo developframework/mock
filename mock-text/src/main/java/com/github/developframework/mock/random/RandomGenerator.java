@@ -4,7 +4,7 @@ package com.github.developframework.mock.random;
 import com.github.developframework.mock.MockCache;
 import com.github.developframework.mock.MockPlaceholder;
 import com.github.developframework.mock.RandomGeneratorRegistry;
-import develop.framework.components.EntitySign;
+import develop.toolkit.base.components.EntitySign;
 
 /**
  * 随机生成器

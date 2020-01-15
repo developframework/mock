@@ -11,19 +11,18 @@
         <module>mock-db</module>
     </modules>
 
+    <name>Mock</name>
+    <url>https://github.com/developframework/mock</url>
+    <description>random data generator</description>
+    <inceptionYear>2018</inceptionYear>
+
     <properties>
-        <version.develop-framework>0.2</version.develop-framework>
+        <version.develop-tookit>1.0.2-SNAPSHOT</version.develop-tookit>
+        <version.chinese-administrative-region-data>1.0.0</version.chinese-administrative-region-data>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>com.github.developframework</groupId>
-                <artifactId>develop-framework-platform</artifactId>
-                <version>${version.develop-framework}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>com.github.developframework</groupId>
                 <artifactId>mock-text</artifactId>
@@ -34,13 +33,18 @@
                 <artifactId>mock-db</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.developframework</groupId>
+                <artifactId>chinese-administrative-region-data</artifactId>
+                <version>${version.chinese-administrative-region-data}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.developframework</groupId>
+                <artifactId>develop-toolkit-base</artifactId>
+                <version>${version.develop-tookit}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <name>Mock</name>
-    <url>https://github.com/developframework/mock</url>
-    <description>random data generator</description>
-    <inceptionYear>2018</inceptionYear>
 
     <developers>
         <developer>
