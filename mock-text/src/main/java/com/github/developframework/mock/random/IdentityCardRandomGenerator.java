@@ -47,7 +47,7 @@ public class IdentityCardRandomGenerator implements RandomGenerator<IdentityCard
         if (addressRef.equals("random")) {
             // 随机生成一个地址
             RandomGenerator addressRandomGenerator = randomGeneratorRegistry.getRandomGenerator("address");
-            MockPlaceholder addressMockPlaceholder = new MockPlaceholder("${ address }");
+            MockPlaceholder addressMockPlaceholder = new MockPlaceholder("address");
             return (County) addressRandomGenerator.randomValue(randomGeneratorRegistry, addressMockPlaceholder, mockCache);
         } else {
             // 引用一个地址
@@ -70,7 +70,7 @@ public class IdentityCardRandomGenerator implements RandomGenerator<IdentityCard
         if (birthdayRef.equals("random")) {
             // 随机生成一个生日
             RandomGenerator dateRandomGenerator = randomGeneratorRegistry.getRandomGenerator("date");
-            MockPlaceholder dateMockPlaceholder = new MockPlaceholder("${ date | range = " + range + " }");
+            MockPlaceholder dateMockPlaceholder = new MockPlaceholder("date | range = " + range);
             return (Date) dateRandomGenerator.randomValue(randomGeneratorRegistry, dateMockPlaceholder, mockCache);
         } else {
             // 引用取生日

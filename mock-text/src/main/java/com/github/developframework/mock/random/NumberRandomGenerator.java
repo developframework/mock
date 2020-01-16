@@ -34,7 +34,7 @@ public class NumberRandomGenerator implements RandomGenerator<Number> {
             throw new MockException("min value greater than max value.");
         }
         boolean isDecimals = mockPlaceholder.getParameterOrDefault(PARAMETER_DECIMALS, boolean.class, false);
-        Number result = new Double(RandomUtils.nextDouble(min.doubleValue(), max.doubleValue()));
+        Number result = RandomUtils.nextDouble(min.doubleValue(), max.doubleValue());
         if (isDecimals) {
             if (digitOptional.isPresent()) {
                 return new BigDecimal(result.doubleValue()).setScale(digitOptional.get(), RoundingMode.CEILING);
@@ -54,7 +54,7 @@ public class NumberRandomGenerator implements RandomGenerator<Number> {
     public String forString(MockPlaceholder mockPlaceholder, Number value) {
         Optional<Integer> fillZeroOptional = mockPlaceholder.getParameter(PARAMETER_FILL_ZERO, Integer.class);
         if (fillZeroOptional.isPresent()) {
-            return String.format("%0" + fillZeroOptional.get().intValue() + "d", value.intValue());
+            return String.format("%0" + fillZeroOptional.get() + "d", value.intValue());
         } else {
             return String.valueOf(value);
         }

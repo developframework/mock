@@ -20,9 +20,7 @@ public class EnumRandomGenerator implements RandomGenerator<String> {
     @Override
     public String randomValue(RandomGeneratorRegistry randomGeneratorRegistry, MockPlaceholder mockPlaceholder, MockCache mockCache) {
         List<String> enums = new ArrayList<>(mockPlaceholder.getParameters().keySet());
-        if (enums.contains("id")) {
-            enums.remove("id");
-        }
+        enums.remove("id");
         int index = RandomUtils.nextInt(0, enums.size());
         return enums.get(index);
     }

@@ -1,12 +1,10 @@
 package com.github.developframework.mock;
 
 import com.github.developframework.mock.random.RandomGenerator;
+import develop.toolkit.base.utils.StringAdvice;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * 一个任务
@@ -15,8 +13,6 @@ import java.util.regex.Pattern;
  * @since 0.1
  */
 public class MockTask {
-
-    private static final String REGEX = "(?=\\$\\{)(.*?)(?<=\\})";
 
     private RandomGeneratorRegistry randomGeneratorRegistry;
 
@@ -35,30 +31,32 @@ public class MockTask {
      *
      * @return 随机生成结果
      */
+    @SuppressWarnings("unchecked")
     public String run() {
         List<MockPlaceholder> mockPlaceholders = extractPlaceholder(template);
         String result = template;
         for (MockPlaceholder mockPlaceholder : mockPlaceholders) {
             RandomGenerator randomGenerator = randomGeneratorRegistry.getRandomGenerator(mockPlaceholder.getName());
-            Optional<String> idOptional = mockPlaceholder.getId();
             Object value = randomGenerator.randomValue(randomGeneratorRegistry, mockPlaceholder, cache);
             // 加入缓存
-            if (idOptional.isPresent()) {
-                cache.put(idOptional.get(), new MockCache.Cache(value, mockPlaceholder));
-            }
+            mockPlaceholder.getId().ifPresent(s -> cache.put(s, new MockCache.Cache(value, mockPlaceholder)));
             final String stringValue = randomGenerator.forString(mockPlaceholder, value);
-            result = result.replace(mockPlaceholder.getPlaceholder(), stringValue);
+            result = result.replace(mockPlaceholder.toString(), stringValue);
         }
         return result;
     }
 
+    /**
+     * 提取占位符
+     *
+     * @param template
+     * @return
+     */
     private List<MockPlaceholder> extractPlaceholder(String template) {
-        List<MockPlaceholder> list = new LinkedList<>();
-        Pattern pattern = Pattern.compile(REGEX);
-        Matcher m = pattern.matcher(template);
-        while(m.find()) {
-            list.add(new MockPlaceholder(m.group()));
-        }
-        return list;
+        return StringAdvice
+                .regexMatchStartEnd(template, "\\$\\{", "\\}")
+                .stream()
+                .map(MockPlaceholder::new)
+                .collect(Collectors.toList());
     }
 }

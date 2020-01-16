@@ -25,9 +25,8 @@ public class MockPlaceholder {
 
     public MockPlaceholder(String placeholder) {
         this.placeholder = placeholder;
-        final String content = placeholder.substring(2, placeholder.length() - 1).trim();
-        if (content.contains("|")) {
-            String[] fragments = content.split("\\s*\\|\\s*");
+        if (placeholder.contains("|")) {
+            String[] fragments = placeholder.split("\\s*\\|\\s*");
             this.name = fragments[0].trim();
             if(fragments.length > 1) {
                 this.parameters = createParameters(fragments[1].trim());
@@ -35,7 +34,7 @@ public class MockPlaceholder {
                 this.parameters = Collections.emptyMap();
             }
         } else {
-            this.name = content;
+            this.name = placeholder;
             this.parameters = Collections.emptyMap();
         }
     }
@@ -70,11 +69,13 @@ public class MockPlaceholder {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public <T> Optional<T> getParameter(String name, Class<T> clazz) {
         Object obj = parameters.get(name);
         return obj == null ? Optional.empty() : Optional.of((T) obj);
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getParameterOrDefault(String name, Class<T> clazz, T defValue) {
         Object obj = parameters.get(name);
         return obj == null ? defValue : (T) obj;
@@ -82,5 +83,10 @@ public class MockPlaceholder {
 
     public Optional<String> getId() {
         return getParameter("id", String.class);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("${%s}", placeholder);
     }
 }
